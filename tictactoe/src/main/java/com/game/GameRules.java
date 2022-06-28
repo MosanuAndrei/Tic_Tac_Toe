@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 public class GameRules {
     private Scanner sc = new Scanner(System.in);
-    private boolean toggle;
+    private char currentPlayer;
+    private boolean toggle = false;
 
     public static char[][] copyBoard(char[][] gameBoard) {
         if (gameBoard == null) {
@@ -19,14 +20,24 @@ public class GameRules {
         return copyBoard;
     }
 
-    public char currentPlayer(){
+    public char setCurrentPlayer(){
         toggle = !toggle;
         if(toggle){
-            return 'X';
+            currentPlayer = 'X';
+            return currentPlayer;
         }
         else{
-            return 'O';
+            currentPlayer = 'O';
+            return currentPlayer;
         }
+    }
+
+    public char getCurrentPlayer(){
+        return currentPlayer;
+    };
+
+    public void resetState(){
+        toggle = false;
     }
 
     public void renderBoard(char[][] gameBoard){
@@ -64,7 +75,7 @@ public class GameRules {
             return updatedGameBoard;
         }
         else{
-            System.out.println("Can't make move, square already taken!");
+            System.out.println("Move can't be made, square already taken!");
             co = humanPlayer(gameBoard, currentPlayer);
             return makeMove(gameBoard, co, currentPlayer);
         }

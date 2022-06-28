@@ -6,24 +6,27 @@ public class GameModes{
         {' ',' ',' '},
         {' ',' ',' '}
     };
+    private char currentPlayer;
 
     public void humanVSHuman(char[][] newGameBoard, GameRules rules, int[] co){
 
         newGameBoard = GameRules.copyBoard(gameBoard);
-
+        
         while(true){
             rules.renderBoard(newGameBoard);
-            char currentPlayer = rules.currentPlayer();
 
             if(rules.checkWinner(newGameBoard)){
-                System.out.println("---------------The " + rules.currentPlayer() + " player has won!---------------");
+                System.out.println("---------------The " + rules.getCurrentPlayer() + " player has won!---------------");
+                rules.resetState();
                 break;
             }
             else if(rules.checkDraw(newGameBoard)){
                 System.out.println("---------------It's a draw!---------------");
+                rules.resetState();
                 break;
             }
 
+            currentPlayer = rules.setCurrentPlayer();
             co = rules.humanPlayer(newGameBoard, currentPlayer);
             newGameBoard = rules.makeMove(newGameBoard, co, currentPlayer);
         }
@@ -35,16 +38,19 @@ public class GameModes{
 
         while(true){
             rules.renderBoard(newGameBoard);
-            char currentPlayer = rules.currentPlayer();
 
             if(rules.checkWinner(newGameBoard)){
-                System.out.println("---------------The " + rules.currentPlayer() + " player has won!---------------");
+                System.out.println("---------------The " + rules.getCurrentPlayer() + " player has won!---------------");
+                rules.resetState();
                 break;
             }
             else if(rules.checkDraw(newGameBoard)){
                 System.out.println("---------------It's a draw!---------------");
+                rules.resetState();
                 break;
             }
+
+            currentPlayer = rules.setCurrentPlayer();
 
             if(currentPlayer == 'X'){ 
                 co = rules.humanPlayer(newGameBoard, currentPlayer);
@@ -75,23 +81,26 @@ public class GameModes{
 
             while(true){
                 rules.renderBoard(newGameBoard);
-                char currentPlayer = rules.currentPlayer();
-
+                
                 if(rules.checkWinner(newGameBoard)){
-                    System.out.println("---------------The " + rules.currentPlayer() + " player has won!---------------");
+                    System.out.println("---------------The " + rules.getCurrentPlayer() + " player has won!---------------");
 
-                    if(currentPlayer == 'X'){
-                        winStats[1]+=1;
-                    }else{
+                    if(rules.getCurrentPlayer() == 'X'){
                         winStats[0]+=1;
+                    }else{
+                        winStats[1]+=1;
                     }
 
+                    rules.resetState();
                     break;
                 }else if(rules.checkDraw(newGameBoard)){
                     System.out.println("---------------It's a draw!---------------");
                     drawStats++;
+                    rules.resetState();
                     break;
                 }
+
+                currentPlayer = rules.setCurrentPlayer();
 
                 if(difKey.equals("1")){
                     if(currentPlayer == 'X'){ 
