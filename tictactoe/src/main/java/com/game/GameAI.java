@@ -113,6 +113,12 @@ public class GameAI{
             }
 
             score = miniMaxScore(copyBoard, opponent, playerToOptimize);
+
+            if(score >= 0 && playerToOptimize == currentPlayer){
+                scores.add(score);
+                break;
+            }
+
             scores.add(score);
         }
 
@@ -142,10 +148,13 @@ public class GameAI{
             }
 
             score = miniMaxScore(copyBoard, opponent, currentPlayer);
-
+            
             if(bestScore == Integer.MIN_VALUE || score > bestScore){
                 bestMove = move;
                 bestScore = score;
+                if(bestScore == +10){
+                    return bestMove;
+                }
             }
         }
         return bestMove;
