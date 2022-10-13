@@ -28,6 +28,26 @@ public class GameModes{
 
             currentPlayer = rules.setCurrentPlayer();
             co = rules.humanPlayer(newGameBoard, currentPlayer);
+
+            while((co[0] != 0 && co[0] != 1 && co[0] != 2) || (co[1] != 0 && co[1] != 1 && co[1] != 2)){
+
+                System.out.println();
+                System.out.println("Error: Only the coordinates: 0, 1, 2 can be used!");
+                System.out.println("You can forfeit the match by setting both coordinates as 4");
+                System.out.println();
+
+                if(co[0] == 4 && co[1] == 4){
+                    System.out.println();
+                    break;
+                }
+
+                co = rules.humanPlayer(newGameBoard, currentPlayer);
+            }
+            if(co[0] == 4 && co[1] == 4){
+                System.out.println();
+                currentPlayer = rules.setCurrentPlayer();
+                break;
+            }
             newGameBoard = rules.makeMove(newGameBoard, co, currentPlayer);
         }
     }
@@ -52,8 +72,29 @@ public class GameModes{
 
             currentPlayer = rules.setCurrentPlayer();
 
-            if(currentPlayer == 'X'){ 
+            if(currentPlayer == 'X'){
+
                 co = rules.humanPlayer(newGameBoard, currentPlayer);
+
+                while((co[0] != 0 && co[0] != 1 && co[0] != 2) || (co[1] != 0 && co[1] != 1 && co[1] != 2)){
+
+                    System.out.println();
+                    System.out.println("Error: Only the coordinates: 0, 1, 2 can be used!");
+                    System.out.println("You can forfeit the match by setting both coordinates as 4");
+                    System.out.println();
+
+                    if(co[0] == 4 && co[1] == 4){
+                        System.out.println();
+                        break;
+                    }
+
+                    co = rules.humanPlayer(newGameBoard, currentPlayer);
+                }
+                if(co[0] == 4 && co[1] == 4){
+                    System.out.println();
+                    currentPlayer = rules.setCurrentPlayer();
+                    break;
+                }
             }else{
                 if(difKey.equals("1")){
                     co = ai.randomMoveAI(newGameBoard, currentPlayer);
